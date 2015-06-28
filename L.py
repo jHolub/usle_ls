@@ -177,7 +177,7 @@ Z = np.array([
 [495.516,495.419,495.379,495.382,495.386,495.366,495.354,495.397,495.536,495.731,495.873,495.836,495.744,495.742,495.919,496.228,496.535,496.892,497.345,497.754,498.083,498.364,498.686,498.993,499.233,499.469,499.724,499.952,500.087,500.161,500.226,500.299,500.393,500.398,500.217,499.906,499.58,499.308,499.028,498.735,498.418,498.088,497.774,497.49,497.24,497.007,496.785,496.586,496.435,496.328,496.261,496.228,496.209,496.206,496.223,496.241,496.26,496.296,496.351,496.416,496.485,496.533,496.578,496.661,496.778,496.992,497.384,497.842,498.144,498.249,498.334,498.379,498.456,498.606,498.768,498.925,499.058,499.188,499.322,499.422,499.447,499.465,499.585,499.904,500.289,500.426,500.246,500.012,499.834,499.682,499.562,499.582,499.657,499.617,499.342,498.952,498.541,498.153,497.786,497.397,497.052,496.737,496.421,496.076,495.786,495.507,495.234,494.95,494.658,494.396,494.166,493.979,493.821,493.684,493.573,493.487,493.427,493.371,493.306,493.229,493.141,493.044,492.932,492.812,492.7,492.598,492.492,492.418,492.413,492.472,492.508,492.488,492.427,492.375,492.397,492.488,492.849,492.744,492.865,491.983,490.218,491.007,490.749,490.222,490.225,490.058,490.117,490.113,490.063,490.053,490.022,490.002,489.958,489.968,489.886,489.866,489.851,489.886,489.881,489.868,489.846,489.835,489.866,489.91,489.93,489.933,489.895,489.846,489.841,489.811,489.84,490,490.308,490.434,490.222,489.983,489.823,489.711,489.695,489.581,489.354,489.017,488.571,488.274,488.119,487.972,487.932,487.932,487.812,487.695,487.692,487.747,487.767,487.673,487.601,487.591,487.44,487.126,486.899,486.816,486.622,486.342,486.12],
 ])
 
-#Z = np.arange(250000).reshape(500,500)
+Z = np.arange(1000000).reshape(1000,1000)
 
 nodata = 9999
 #    Z2    Z6    Z3
@@ -186,104 +186,79 @@ nodata = 9999
 
 rows,cols = len(Z), len(Z[0])
 
-Zk1 = np.full(Z.shape,nodata, dtype=float);
+Zk1 = np.full(Z.shape,nodata, dtype=float)
 Zk1[0:rows-1,0:cols-1] = Z[1:rows,1:cols]
 #print Zk1
-Zk2 = np.full(Z.shape,nodata, dtype=float);
+Zk2 = np.full(Z.shape,nodata, dtype=float)
 Zk2[1:rows,1:cols] = Z[0:rows-1,0:cols-1]
 #print Zk2
 
-Zk3 = np.full(Z.shape,nodata, dtype=float);
+Zk3 = np.full(Z.shape,nodata, dtype=float)
 Zk3[1:rows,0:cols-1] = Z[0:rows-1,1:cols]
 #print Zk3
-Zk4 = np.full(Z.shape,nodata, dtype=float);
+Zk4 = np.full(Z.shape,nodata, dtype=float)
 Zk4[0:rows-1,1:cols] = Z[1:rows,0:cols-1]
 #print Zk4
 
-Zk5 = np.full(Z.shape,nodata, dtype=float);
+Zk5 = np.full(Z.shape,nodata, dtype=float)
 Zk5[0:rows-1,0:cols] = Z[1:rows,0:cols]
 #print Zk5
-Zk6 = np.full(Z.shape,nodata, dtype=float);
+Zk6 = np.full(Z.shape,nodata, dtype=float)
 Zk6[1:rows,0:cols] = Z[0:rows-1,0:cols]
 #print Zk6
 
-Zk7 = np.full(Z.shape,nodata, dtype=float);
+Zk7 = np.full(Z.shape,nodata, dtype=float)
 Zk7[0:rows,0:cols-1] = Z[0:rows,1:cols]
 #print Zk7
-Zk8 = np.full(Z.shape,nodata, dtype=float);
+Zk8 = np.full(Z.shape,nodata, dtype=float)
 Zk8[0:rows,1:cols] = Z[0:rows,0:cols-1]
 #print Zk8
 
 vaha = ( ((Z - Zk1) + abs(Z - Zk1)) + ((Z - Zk2) + abs(Z - Zk2)) + ((Z - Zk3) + abs(Z - Zk3)) + ((Z - Zk4) + abs(Z - Zk4)) + ((Z - Zk5) + abs(Z - Zk5)) + ((Z - Zk6) + abs(Z - Zk6)) + ((Z - Zk7) + abs(Z - Zk7)) + ((Z - Zk8) + abs(Z - Zk8))) / 2
-print vaha
+#print vaha
 
 #########################################################
 nodata = -9999
 np.seterr(all='ignore')
 
-stream1 = np.full(Z.shape,nodata, dtype=float);
-stream1[0:rows-1,0:cols-1] = Z[1:rows,1:cols]
-streamVaha1 = np.full(Z.shape,nodata, dtype=float);
+streamVaha1 = np.full(Z.shape,nodata, dtype=float)
 streamVaha1[0:rows-1,0:cols-1] = vaha[1:rows,1:cols]
-dif1 = (((stream1 - Z) + abs((stream1 - Z))) / 2)
-dv1 = np.divide(dif1 ,streamVaha1)
-dv1 = np.nan_to_num(dv1)
+dv1 = np.divide((((Zk1 - Z) + abs((Zk1 - Z))) / 2) ,streamVaha1)
+dv1 = np.nan_to_num(dv1)  
 
-
-stream2 = np.full(Z.shape,nodata, dtype=float);
-stream2[1:rows,1:cols] = Z[0:rows-1,0:cols-1]
-streamVaha2 = np.full(Z.shape,nodata, dtype=float);
+streamVaha2 = np.full(Z.shape,nodata, dtype=float)
 streamVaha2[1:rows,1:cols] = vaha[0:rows-1,0:cols-1]
-dif2 = (((stream2 - Z) + abs((stream2 - Z))) / 2)
-dv2 = np.divide(dif2 ,streamVaha2)
+dv2 = np.divide((((Zk2 - Z) + abs((Zk2 - Z))) / 2) ,streamVaha2)
 dv2 = np.nan_to_num(dv2)
 
-stream3 = np.full(Z.shape,nodata, dtype=float);
-stream3[1:rows,0:cols-1] = Z[0:rows-1,1:cols]
 streamVaha3 = np.full(Z.shape,nodata, dtype=float);
 streamVaha3[1:rows,0:cols-1] = vaha[0:rows-1,1:cols]
-dif3 = (((stream3 - Z) + abs((stream3 - Z))) / 2)
-dv3 = np.divide(dif3 ,streamVaha3)
+dv3 = np.divide((((Zk3 - Z) + abs((Zk3 - Z))) / 2) ,streamVaha3)
 dv3 = np.nan_to_num(dv3)
 
-stream4 = np.full(Z.shape,nodata, dtype=float);
-stream4[0:rows-1,1:cols] = Z[1:rows,0:cols-1]
 streamVaha4 = np.full(Z.shape,nodata, dtype=float);
-streamVaha4[0:rows-1,1:cols] = vaha[1:rows,0:cols-1]
-dif4 = (((stream4 - Z) + abs((stream4 - Z))) / 2)
-dv4 = np.divide(dif4 ,streamVaha4)
+streamVaha4[0:rows-1,1:cols] = vaha[1:rows,0:cols-1] 
+dv4 = np.divide((((Zk4 - Z) + abs((Zk4 - Z))) / 2) ,streamVaha4)
 dv4 = np.nan_to_num(dv4)
 
-stream5 = np.full(Z.shape,nodata, dtype=float);
-stream5[0:rows-1,0:cols] = Z[1:rows,0:cols]
 streamVaha5 = np.full(Z.shape,nodata, dtype=float);
 streamVaha5[0:rows-1,0:cols] = vaha[1:rows,0:cols]
-dif5 = (((stream5 - Z) + abs((stream5 - Z))) / 2)
-dv5 = np.divide(dif5 ,streamVaha5)
+dv5 = np.divide((((Zk5 - Z) + abs((Zk5 - Z))) / 2) ,streamVaha5)
 dv5 = np.nan_to_num(dv5)
 
-stream6 = np.full(Z.shape,nodata, dtype=float);
-stream6[1:rows,0:cols] = Z[0:rows-1,0:cols]
 streamVaha6 = np.full(Z.shape,nodata, dtype=float);
 streamVaha6[1:rows,0:cols] = vaha[0:rows-1,0:cols]
-dif6 = (((stream6 - Z) + abs((stream6 - Z))) / 2)
-dv6 = np.divide(dif6 ,streamVaha6)
+dv6 = np.divide((((Zk6 - Z) + abs((Zk6 - Z))) / 2) ,streamVaha6)
 dv6 = np.nan_to_num(dv6)
 
-stream7 = np.full(Z.shape,nodata, dtype=float);
-stream7[0:rows,0:cols-1] = Z[0:rows,1:cols]
 streamVaha7 = np.full(Z.shape,nodata, dtype=float);
 streamVaha7[0:rows,0:cols-1] = vaha[0:rows,1:cols]
-dif7 = (((stream7 - Z) + abs((stream7 - Z))) / 2)
-dv7 = np.divide(dif7 ,streamVaha7)
+dv7 = np.divide((((Zk7 - Z) + abs((Zk7 - Z))) / 2) ,streamVaha7)
 dv7 = np.nan_to_num(dv7)
 
-stream8 = np.full(Z.shape,nodata, dtype=float);
-stream8[0:rows,1:cols] = Z[0:rows,0:cols-1]
 streamVaha8 = np.full(Z.shape,nodata, dtype=float);
 streamVaha8[0:rows,1:cols] = vaha[0:rows,0:cols-1]
-dif8 = (((stream8 - Z) + abs((stream8 - Z))) / 2)
-dv8 = np.divide(dif8 ,streamVaha8)
+dv8 = np.divide((((Zk8 - Z) + abs((Zk8 - Z))) / 2) ,streamVaha8)
 dv8 = np.nan_to_num(dv8)
 
 catchment = dv1 + dv2 + dv3 + dv4 + dv5 + dv6 + dv7 + dv8
@@ -292,30 +267,27 @@ criter = 1
 previousIter = 0
 criterKonv = 1;
 i = 1
-while(criter != 0):
-    
-    catchment1 = np.full( Z.shape, 0, dtype=float);
-    catchment1[0:rows-1,0:cols-1] = catchment[1:rows,1:cols]
-    
-    catchment2 = np.full( Z.shape, 0, dtype=float);
+startIter = time.time() 
+
+catchment1 = np.full( Z.shape, 0, dtype=float);
+catchment2 = np.full( Z.shape, 0, dtype=float);
+catchment3 = np.full( Z.shape, 0, dtype=float);
+catchment4 = np.full( Z.shape, 0, dtype=float);
+catchment5 = np.full( Z.shape, 0, dtype=float);
+catchment6 = np.full( Z.shape, 0, dtype=float);
+catchment7 = np.full( Z.shape, 0, dtype=float);
+catchment8 = np.full( Z.shape, 0, dtype=float);
+
+#while(criter != 0):
+while(i < 101):    
+
+    catchment1[0:rows-1,0:cols-1] = catchment[1:rows,1:cols] 
     catchment2[1:rows,1:cols] = catchment[0:rows-1,0:cols-1]
-    
-    catchment3 = np.full( Z.shape, 0, dtype=float);
-    catchment3[1:rows,0:cols-1] = catchment[0:rows-1,1:cols]
-    
-    catchment4 = np.full( Z.shape, 0, dtype=float);
-    catchment4[0:rows-1,1:cols] = catchment[1:rows,0:cols-1]
-    
-    catchment5 = np.full( Z.shape, 0, dtype=float);
+    catchment3[1:rows,0:cols-1] = catchment[0:rows-1,1:cols] 
+    catchment4[0:rows-1,1:cols] = catchment[1:rows,0:cols-1]   
     catchment5[0:rows-1,0:cols] = catchment[1:rows,0:cols]
-    
-    catchment6 = np.full( Z.shape, 0, dtype=float);
-    catchment6[1:rows,0:cols] = catchment[0:rows-1,0:cols]
-    
-    catchment7 = np.full( Z.shape, 0, dtype=float);
+    catchment6[1:rows,0:cols] = catchment[0:rows-1,0:cols] 
     catchment7[0:rows,0:cols-1] = catchment[0:rows,1:cols]
-    
-    catchment8 = np.full( Z.shape, 0, dtype=float);
     catchment8[0:rows,1:cols] = catchment[0:rows,0:cols-1]
     
     catchment = ((catchment1 * dv1) + dv1) + ((catchment2 * dv2) + dv2) + ((catchment3 * dv3) + dv3) + ((catchment4 * dv4) + dv4) + ((catchment5 * dv5) + dv5) + ((catchment6 * dv6) + dv6) + ((catchment7 * dv7) + dv7) + ((catchment8 * dv8) + dv8)
@@ -324,15 +296,15 @@ while(criter != 0):
     previousIter = np.sum(catchment) 
     print criter , i
     i = i +1   
-    
+print 'It took iter', time.time()-startIter, 'seconds.'     
 print 'It took', time.time()-start, 'seconds.' 
 
 
-for x in range(0,158):
-    for y in range(0,203):
-        if catchment[x][y] > 225:
-            catchment[x][y] = 225
+#for x in range(0,158):
+#    for y in range(0,203):
+#        if catchment[x][y] > 225:
+#            catchment[x][y] = 225
 
-im2 = imshow(catchment)
-colorbar()
-show()
+#im2 = imshow(catchment)
+#colorbar()
+#show()
