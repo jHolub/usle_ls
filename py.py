@@ -1,28 +1,33 @@
-#!c:/canopy/User/python.exe  
-import time
-print "Content-type: text/html"
-print
-start = time.time()
-s = []
-for i in range(0,1000):
-    r = []
-    for j in range(0,1000):
-        r.append((i**0.5)**0.2)
-    s.append(r)
-print 'It took', time.time()-start, 'seconds.' 
+from __future__ import division
+from pylab import *
 
 import numpy as np
-L = range(1000)
+import time
+import math
 
-[i**2 for i in L]
+Z = np.array([
+            [9,8,6,5,4],
+            [9,8,6,5,4],
+            [9,7,6,4,3],
+            [9,7,6,4,3]
+            ])
+#    Z2    Z6    Z3
+#    Z8    Z     Z7
+#    Z4    Z5    Z1
 
-a = np.arange(1000)
+Z = np.arange(100000000.0).reshape(10000,10000) 
+           
+rows,cols = len(Z), len(Z[0])
 
-b = a**2
-print b
+#zz = np.empty(shape=(rows-2,cols-2), dtype=float)
+zz = Z[1:rows-1,1:cols-1]  
+#zz[1][1] = 11;           
+print zz   
 
-import matplotlib.pyplot as plt  # the tidy way
-x = np.linspace(0, 3, 20)
-y = np.linspace(0, 9, 20)
-plt.plot(x, y)       # line plot    
-plt.show()    
+Zk1 = Z[2:rows,2:cols]            
+
+pok = np.full( Z.shape, 0, dtype=float);
+pok = Z[1:rows,1:cols] 
+
+print zz - Zk1
+print Zk1 - zz + Zk1 - zz + Zk1 - zz +Zk1 - zz

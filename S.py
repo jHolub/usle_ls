@@ -3,6 +3,7 @@ from pylab import *
 
 import numpy as np
 import time
+import math
 
 start = time.time() 
 
@@ -12,7 +13,7 @@ Z = np.array([
             [15,13,15,15,14],
             [15,15,15,15,23]
             ])
-
+            
 Z = np.array([
 [453.308,453.329,453.378,453.428,453.471,453.446,453.344,453.279,453.263,453.216,453.169,453.164,453.104,452.957,452.952,453.043,453.161,453.221,453.194,453.189,453.219,453.246,453.263,453.159,453.209,452.721,451.536,451.176,451.455,451.471,451.35,451.29,451.213,451.154,451.154,451.106,450.816,450.472,450.491,450.806,450.941,450.948,450.933,450.949,451.026,451.104,451.171,451.215,451.245,451.263,451.26,451.245,451.246,451.276,451.321,451.316,451.29,451.31,451.398,451.511,451.601,451.635,451.632,451.616,451.608,451.6,451.566,451.51,451.46,451.446,451.468,451.501,451.545,451.596,451.663,451.763,451.898,452.037,452.14,452.224,452.35,452.53,452.711,452.856,452.937,452.968,453.016,453.049,453.018,452.786,452.504,452.275,452.13,452.033,451.952,451.947,452.015,452.048,452.028,451.997,452.078,452.304,452.576,452.809,453.001,453.199,453.374,453.505,453.681,453.898,454.022,454.077,454.083,454.065,454.057,454.063,454.088,454.13,454.16,454.148,454.103,454.037,453.963,453.912,453.897,453.883,453.868,453.873,453.868,453.83,453.803,453.805,453.811,453.801,453.778,453.776,453.798,453.816,453.816,453.805,453.826,453.856,453.845,453.811,453.796,453.815,453.826,453.83,453.835,453.835,453.811,453.775,453.74,453.721,453.715,453.736,453.793,453.856,453.89,453.861,453.82,453.821,453.873,453.892,453.835,453.776,453.771,453.806,453.835,453.805,453.765,453.763,453.778,453.783,453.795,453.861,453.972,454.057,454.07,454.068,454.102,454.182,454.263,454.322,454.347,454.355,454.385,454.445,454.52,454.585,454.642,454.705,454.796,454.892,454.976,455.037,455.087,455.144,455.231,455.339,455.449,455.549,455.653],
 [453.433,453.413,453.448,453.48,453.56,453.576,453.505,453.394,453.328,453.244,453.196,453.208,453.129,452.957,452.906,452.976,453.143,453.234,453.214,453.196,453.208,453.233,453.264,453.211,453.229,452.647,451.638,451.511,451.797,451.728,451.606,451.611,451.565,451.533,451.533,451.388,450.976,450.626,450.831,451.255,451.37,451.316,451.268,451.285,451.355,451.416,451.458,451.47,451.48,451.488,451.478,451.446,451.43,451.446,451.491,451.491,451.475,451.496,451.59,451.703,451.793,451.797,451.748,451.692,451.672,451.685,451.682,451.63,451.565,451.53,451.543,451.6,451.682,451.762,451.852,451.955,452.082,452.205,452.295,452.369,452.49,452.637,452.767,452.866,452.922,452.962,453.028,453.146,453.254,453.139,452.877,452.634,452.452,452.305,452.209,452.2,452.304,452.394,452.465,452.519,452.657,452.856,453.048,453.179,453.283,453.433,453.618,453.776,453.882,453.903,453.938,453.955,453.963,453.96,453.96,453.967,453.987,454,453.992,453.952,453.892,453.838,453.786,453.763,453.756,453.76,453.755,453.77,453.77,453.755,453.741,453.743,453.746,453.741,453.74,453.765,453.813,453.845,453.848,453.84,453.848,453.88,453.903,453.887,453.855,453.843,453.84,453.846,453.863,453.878,453.868,453.838,453.805,453.786,453.785,453.805,453.861,453.917,453.943,453.923,453.883,453.882,453.958,454.023,454.028,453.985,453.98,453.998,454,453.957,453.915,453.94,453.962,453.962,453.957,454.002,454.113,454.207,454.225,454.208,454.213,454.267,454.339,454.394,454.415,454.42,454.447,454.504,454.58,454.659,454.727,454.792,454.867,454.947,455.021,455.076,455.127,455.187,455.279,455.393,455.508,455.611,455.72],
@@ -177,143 +178,50 @@ Z = np.array([
 [495.516,495.419,495.379,495.382,495.386,495.366,495.354,495.397,495.536,495.731,495.873,495.836,495.744,495.742,495.919,496.228,496.535,496.892,497.345,497.754,498.083,498.364,498.686,498.993,499.233,499.469,499.724,499.952,500.087,500.161,500.226,500.299,500.393,500.398,500.217,499.906,499.58,499.308,499.028,498.735,498.418,498.088,497.774,497.49,497.24,497.007,496.785,496.586,496.435,496.328,496.261,496.228,496.209,496.206,496.223,496.241,496.26,496.296,496.351,496.416,496.485,496.533,496.578,496.661,496.778,496.992,497.384,497.842,498.144,498.249,498.334,498.379,498.456,498.606,498.768,498.925,499.058,499.188,499.322,499.422,499.447,499.465,499.585,499.904,500.289,500.426,500.246,500.012,499.834,499.682,499.562,499.582,499.657,499.617,499.342,498.952,498.541,498.153,497.786,497.397,497.052,496.737,496.421,496.076,495.786,495.507,495.234,494.95,494.658,494.396,494.166,493.979,493.821,493.684,493.573,493.487,493.427,493.371,493.306,493.229,493.141,493.044,492.932,492.812,492.7,492.598,492.492,492.418,492.413,492.472,492.508,492.488,492.427,492.375,492.397,492.488,492.849,492.744,492.865,491.983,490.218,491.007,490.749,490.222,490.225,490.058,490.117,490.113,490.063,490.053,490.022,490.002,489.958,489.968,489.886,489.866,489.851,489.886,489.881,489.868,489.846,489.835,489.866,489.91,489.93,489.933,489.895,489.846,489.841,489.811,489.84,490,490.308,490.434,490.222,489.983,489.823,489.711,489.695,489.581,489.354,489.017,488.571,488.274,488.119,487.972,487.932,487.932,487.812,487.695,487.692,487.747,487.767,487.673,487.601,487.591,487.44,487.126,486.899,486.816,486.622,486.342,486.12],
 ])
 
-Z = np.arange(1000000).reshape(1000,1000)
-
-nodata = 9999
-#    Z2    Z6    Z3
-#    Z8    Z     Z7
-#    Z4    Z5    Z1
-
+dim = 5
 rows,cols = len(Z), len(Z[0])
-# pow(2,0.5)
-diagonal = 1.41421
 
-Zk1 = np.full(Z.shape,nodata, dtype=float)
-Zk1[0:rows-1,0:cols-1] = Z[1:rows,1:cols]
-#print Zk1
-Zk2 = np.full(Z.shape,nodata, dtype=float)
-Zk2[1:rows,1:cols] = Z[0:rows-1,0:cols-1]
-#print Zk2
+S = np.full(Z.shape,0, dtype=float)
+slope = np.full(Z.shape,0, dtype=float)
 
-Zk3 = np.full(Z.shape,nodata, dtype=float)
-Zk3[1:rows,0:cols-1] = Z[0:rows-1,1:cols]
-#print Zk3
-Zk4 = np.full(Z.shape,nodata, dtype=float)
-Zk4[0:rows-1,1:cols] = Z[1:rows,0:cols-1]
-#print Zk4
+for j in range(1,cols-1):
+    for i in range(1,rows-1):
+        Zk1 = Z[i-1][j-1]
+        Zk2 = Z[i-1][j]
+        Zk3 = Z[i-1][j+1]
+        Zk4 = Z[i][j-1]
+        Zk6 = Z[i][j+1]
+        Zk7 = Z[i+1][j-1]
+        Zk8 = Z[i+1][j]
+        Zk9 = Z[i+1][j+1]
+                        
+        b = (Zk3 + (2*Zk6) + Zk9 - Zk1 - (2*Zk4) - Zk7)/ (8*dim)
+        c = (Zk1 + (2*Zk2) + Zk3 - Zk7 - (2*Zk8) - Zk9) / (8*dim)
 
-Zk5 = np.full(Z.shape,nodata, dtype=float)
-Zk5[0:rows-1,0:cols] = Z[1:rows,0:cols]
-#print Zk5
-Zk6 = np.full(Z.shape,nodata, dtype=float)
-Zk6[1:rows,0:cols] = Z[0:rows-1,0:cols]
-#print Zk6
+        tanSlope = math.sqrt((b*b) + (c*c))
+        slope[i][j] = math.tan(tanSlope)
 
-Zk7 = np.full(Z.shape,nodata, dtype=float)
-Zk7[0:rows,0:cols-1] = Z[0:rows,1:cols]
-#print Zk7
-Zk8 = np.full(Z.shape,nodata, dtype=float)
-Zk8[0:rows,1:cols] = Z[0:rows,0:cols-1]
-#print Zk8
+# slope in degree        
+        degree = slope[i][j] * 57.29578
 
-vaha = (((Z - Zk1) + abs(Z - Zk1)) / (diagonal * 2)) + (((Z - Zk2) + abs(Z - Zk2)) / (diagonal * 2)) + (((Z - Zk3) + abs(Z - Zk3)) / (diagonal * 2)) + (((Z - Zk4) + abs(Z - Zk4)) / (diagonal * 2)) + (((Z - Zk5) + abs(Z - Zk5)) / 2) + (((Z - Zk6) + abs(Z - Zk6)) / 2) + (((Z - Zk7) + abs(Z - Zk7)) / 2) + (((Z - Zk8) + abs(Z - Zk8)) / 2)
-#print vaha
+# McCoola (1989)
+# tan(alfa) = protilehla / prilehla; 
+        percent = math.tan(degree)
 
-#########################################################
-nodata = -9999
-np.seterr(all='ignore')
-
-streamVaha1 = np.full(Z.shape,nodata, dtype=float)
-streamVaha1[0:rows-1,0:cols-1] = vaha[1:rows,1:cols]
-dv1 = np.divide(((((Zk1 - Z) + abs((Zk1 - Z))) / diagonal) / 2) ,streamVaha1)
-dv1 = np.nan_to_num(dv1)  
-
-streamVaha2 = np.full(Z.shape,nodata, dtype=float)
-streamVaha2[1:rows,1:cols] = vaha[0:rows-1,0:cols-1]
-dv2 = np.divide(((((Zk2 - Z) + abs((Zk2 - Z))) / diagonal) / 2) ,streamVaha2)
-dv2 = np.nan_to_num(dv2)
-
-streamVaha3 = np.full(Z.shape,nodata, dtype=float);
-streamVaha3[1:rows,0:cols-1] = vaha[0:rows-1,1:cols]
-dv3 = np.divide(((((Zk3 - Z) + abs((Zk3 - Z))) / diagonal) / 2) ,streamVaha3)
-dv3 = np.nan_to_num(dv3)
-
-streamVaha4 = np.full(Z.shape,nodata, dtype=float);
-streamVaha4[0:rows-1,1:cols] = vaha[1:rows,0:cols-1] 
-dv4 = np.divide(((((Zk4 - Z) + abs((Zk4 - Z))) / diagonal) / 2) ,streamVaha4)
-dv4 = np.nan_to_num(dv4)
-
-streamVaha5 = np.full(Z.shape,nodata, dtype=float);
-streamVaha5[0:rows-1,0:cols] = vaha[1:rows,0:cols]
-dv5 = np.divide((((Zk5 - Z) + abs((Zk5 - Z))) / 2) ,streamVaha5)
-dv5 = np.nan_to_num(dv5)
-
-streamVaha6 = np.full(Z.shape,nodata, dtype=float);
-streamVaha6[1:rows,0:cols] = vaha[0:rows-1,0:cols]
-dv6 = np.divide((((Zk6 - Z) + abs((Zk6 - Z))) / 2) ,streamVaha6)
-dv6 = np.nan_to_num(dv6)
-
-streamVaha7 = np.full(Z.shape,nodata, dtype=float);
-streamVaha7[0:rows,0:cols-1] = vaha[0:rows,1:cols]
-dv7 = np.divide((((Zk7 - Z) + abs((Zk7 - Z))) / 2) ,streamVaha7)
-dv7 = np.nan_to_num(dv7)
-
-streamVaha8 = np.full(Z.shape,nodata, dtype=float);
-streamVaha8[0:rows,1:cols] = vaha[0:rows,0:cols-1]
-dv8 = np.divide((((Zk8 - Z) + abs((Zk8 - Z))) / 2) ,streamVaha8)
-dv8 = np.nan_to_num(dv8)
-
-catchment = dv1 + dv2 + dv3 + dv4 + dv5 + dv6 + dv7 + dv8
-
-criter = 1
-previousIter = 0
-criterKonv = 1;
-i = 1
+        if (percent < 0.09): 
+            S[i][j] = 10.8 * math.sin(slope[i][j]) + 0.03
+        else:
+            S[i][j] = 16.8 * math.sin(slope[i][j]) - 0.5
 
 
-catchment1 = np.full( Z.shape, 0, dtype=float);
-catchment2 = np.full( Z.shape, 0, dtype=float);
-catchment3 = np.full( Z.shape, 0, dtype=float);
-catchment4 = np.full( Z.shape, 0, dtype=float);
-catchment5 = np.full( Z.shape, 0, dtype=float);
-catchment6 = np.full( Z.shape, 0, dtype=float);
-catchment7 = np.full( Z.shape, 0, dtype=float);
-catchment8 = np.full( Z.shape, 0, dtype=float);
-
-startIter = time.time() 
-
-#while(criter != 0):
-while(i < 5):    
-
-    catchment1[0:rows-1,0:cols-1] = catchment[1:rows,1:cols] 
-    catchment2[1:rows,1:cols] = catchment[0:rows-1,0:cols-1]
-    catchment3[1:rows,0:cols-1] = catchment[0:rows-1,1:cols] 
-    catchment4[0:rows-1,1:cols] = catchment[1:rows,0:cols-1]   
-    catchment5[0:rows-1,0:cols] = catchment[1:rows,0:cols]
-    catchment6[1:rows,0:cols] = catchment[0:rows-1,0:cols] 
-    catchment7[0:rows,0:cols-1] = catchment[0:rows,1:cols]
-    catchment8[0:rows,1:cols] = catchment[0:rows,0:cols-1]
-    
-    catchment = ((catchment1 * dv1) + dv1) + ((catchment2 * dv2) + dv2) + ((catchment3 * dv3) + dv3) + ((catchment4 * dv4) + dv4) + ((catchment5 * dv5) + dv5) + ((catchment6 * dv6) + dv6) + ((catchment7 * dv7) + dv7) + ((catchment8 * dv8) + dv8)
-    
-    criter = previousIter - np.sum(catchment)
-    previousIter = np.sum(catchment) 
-    print criter , i
-    i = i +1   
-print 'It took iter', time.time()-startIter, 'seconds.'     
+   
 print 'It took', time.time()-start, 'seconds.' 
 
-
-for x in range(0,158):
-    for y in range(0,203):
-        if catchment[x][y] > 225:
-            catchment[x][y] = 225
-
-im2 = imshow(catchment)
+for j in range(0,cols):
+    for i in range(0,rows):        
+        if S[i][j] > 2:
+            S[i][j] = 2
+            
+im2 = imshow(S)
 colorbar()
 show()
-
-print catchment[1][1]
-print Z[1][1]
-print "mean: " , np.mean(catchment)
-print "median: " , np.median(catchment)
